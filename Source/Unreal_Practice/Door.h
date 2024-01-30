@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "Components/StaticMeshComponent.h"
 #include "Door.generated.h"
 
 UCLASS()
@@ -23,4 +24,21 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	UPROPERTY(EditAnywhere)
+	UStaticMeshComponent* DoorMesh;
+	
+	UPROPERTY(EditAnywhere)
+	float CloseTime;
+
+	float DoorDeltaTime;
+
+	bool bOpen;
+
+	FTimerHandle DoorTimerHandle;
+
+	FRotator OriginRotation;
+
+	void Open();
+
+	void Close();
 };
