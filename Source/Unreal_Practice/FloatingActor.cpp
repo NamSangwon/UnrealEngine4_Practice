@@ -2,6 +2,7 @@
 
 
 #include "FloatingActor.h"
+#include "Unreal_Practice.h"
 
 // Sets default values
 AFloatingActor::AFloatingActor()
@@ -17,6 +18,30 @@ void AFloatingActor::BeginPlay()
 	Super::BeginPlay();
 	
 	FloatingSpeed = FVector(1.0f, 1.0f, 1.0f);
+
+	// Show Log
+
+	// Log = Fatal > *Error > *Warning > *Display > Log > Verbose > VeryVerbose (* 표시는 자주 사용)
+
+	// LogTemp = 카테고리 표시 (LogTemp == 임시 카테고리)
+	UE_LOG(LogTemp, Error, TEXT("Error Message"));
+	UE_LOG(LogTemp, Warning, TEXT("Warning Message"));
+	UE_LOG(LogTemp, Display, TEXT("Display Message"));
+
+	// 사용자 정의 Log Category
+	UE_LOG(MyLogCategory, Log, TEXT("User Define Log Category"));
+
+	// 변수 포함 로그 출력
+	FString CharacterName = TEXT("HiWer");
+	UE_LOG(LogTemp, Log, TEXT("Character Name = %s"), *CharacterName); 
+
+	bool isAttackable = true;
+	UE_LOG(LogTemp, Log, TEXT("Is Attackable = %s"), isAttackable ? TEXT("true") : TEXT("false"));
+
+	FVector CharacterPosition = GetActorLocation();
+	UE_LOG(LogTemp, Log, TEXT("Position = %s"), *CharacterPosition.ToString());
+
+	UE_LOG(LogTemp, Log, TEXT("Character = %s, Position = %s"), *CharacterName, *CharacterPosition.ToString());
 }
 
 // Called every frame
