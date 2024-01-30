@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+// #include "FloatingActor.generated.h" 전에 다른 컴포넌트들을 import 해야 오류가 발생하지 않음 (언리얼의 느린 인텔리센스 때문)
 #include "FloatingActor.generated.h"
 
 UCLASS()
