@@ -28,4 +28,13 @@ public:
 
 	UPROPERTY(EditAnywhere)
 	USceneComponent* OurVisibleComponent; // USceneComponent == 위치와 회전 등을 포함하는 월드에 배치 가능한 다른 컴포너트들의 부모 클래스 컴포넌트 (충돌같은 물리효과 X -> 더미로 사용하기 좋음)
+
+	// 입력에 따른 무빙 함수 구현
+	void Move_XAxis(float AxisValue);
+	void Move_YAxis(float AxisValue);
+	void StartGrowing();
+	void StopGrowing();
+
+	FVector CurrentVelocity;
+	bool bGrowing;
 };
