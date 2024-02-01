@@ -26,5 +26,17 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	virtual UPawnMovementComponent* GetMovementComponent() const override; // UCollidingPawnMovementComponent의 GetMovementComponent()를 사용하도록 재정의
+
 	UParticleSystemComponent* OurParticleSystem;
+
+	class UCollidingPawnMovementComponent* OurMovementComponent; // 임시 선언 클래스 -> 소스파일에서 import 必 (헤더에서 import해도 무관)
+
+	void MoveForward(float AxisValue);
+
+	void MoveRight(float AxisValue);
+
+	void Turn(float AxisValue);
+
+	void ParticleToggle();
 };
