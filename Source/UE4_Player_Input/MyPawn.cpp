@@ -52,8 +52,12 @@ void AMyPawn::Tick(float DeltaTime)
 
 	{
 		if (!CurrentVelocity.IsZero()){
-			FVector NewLocation = GetActorLocation() + (CurrentVelocity * DeltaTime); // 움직임 계산
+			InputTime += DeltaTime;
+			FVector NewLocation = GetActorLocation() + (CurrentVelocity * DeltaTime * (InputTime <= 1.0f ? 1.0f : 3.0f)); // 움직임 계산 (키 누르는 시간이 1초보다 길면 속도 3배 증가) 
 			SetActorLocation(NewLocation); // 적용
+		}
+		else{
+			InputTime = 0.0f;
 		}
 	}
 }
