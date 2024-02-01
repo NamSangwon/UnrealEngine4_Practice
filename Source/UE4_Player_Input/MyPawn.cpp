@@ -41,7 +41,12 @@ void AMyPawn::Tick(float DeltaTime)
 	{ // Growing 실행 처리
 		float CurrentScale = OurVisibleComponent->GetComponentScale().X;
 		if(bGrowing){
-			CurrentScale += DeltaTime;
+			if (InputTime > 0.0f && InputTime <= 0.5f){ // 이동 키 & growing 키 동시에 누를 시 즉시 크기 조절
+				CurrentScale = 2.0f;
+			} 
+			else {
+				CurrentScale += DeltaTime;
+			}
 		}
 		else{
 			CurrentScale -= DeltaTime;
