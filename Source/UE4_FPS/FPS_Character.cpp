@@ -2,12 +2,18 @@
 
 
 #include "FPS_Character.h"
+#include "Components/CapsuleComponent.h"
 
 // Sets default values
 AFPS_Character::AFPS_Character()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+
+	FPSCameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("FirstPersonCamera"));
+	FPSCameraComponent->SetupAttachment(GetCapsuleComponent()); // 카메라 부착
+	FPSCameraComponent->SetRelativeLocation(FVector(0.0f, 0.0f, 50.0f + BaseEyeHeight)); // 카메라 위치 조정
+	FPSCameraComponent->bUsePawnControlRotation = true; // Pawn 카메라 로테이션 제어 허용
 
 }
 

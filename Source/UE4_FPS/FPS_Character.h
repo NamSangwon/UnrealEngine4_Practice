@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "Camera/CameraComponent.h"
 #include "FPS_Character.generated.h"
 
 UCLASS()
@@ -39,4 +40,8 @@ public:
 	
 	UFUNCTION()
 	void StopJump();
+
+	// 카메라 클래스 변수
+	UPROPERTY(VisibleAnywhere)
+	UCameraComponent* FPSCameraComponent;
 };
