@@ -41,6 +41,10 @@ void AFPS_Character::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 	// 캐릭터 클래스에서 제공하는 카메라 회전 컨트롤에 대한 필수 함수 사용
 	InputComponent->BindAxis("Turn", this, &AFPS_Character::AddControllerYawInput);
 	InputComponent->BindAxis("LookUp", this, &AFPS_Character::AddControllerPitchInput);
+
+	// 점프 함수 매핑
+	InputComponent->BindAction("Jump", IE_Pressed, this, &AFPS_Character::StartJump);
+	InputComponent->BindAction("Jump", IE_Released, this, &AFPS_Character::StopJump);
 }
 
 // 캐릭터의 동작 축을 카메라에 상대적이게 설정 (전방 == 카메라가 향하는 방향)
@@ -54,4 +58,12 @@ void AFPS_Character::MoveForward(float AxisValue){
 void AFPS_Character::MoveRight(float AxisValue){
 	FVector Direction = FRotationMatrix(Controller->GetControlRotation()).GetScaledAxis(EAxis::Y);
 	AddMovementInput(Direction, AxisValue);
+}
+
+void AFPS_Character::StartJump(){
+	bPressedJump = true;
+}
+
+void AFPS_Character::StopJump(){
+	bPressedJump = false;
 }

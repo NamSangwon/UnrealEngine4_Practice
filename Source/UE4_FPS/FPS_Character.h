@@ -32,4 +32,11 @@ public:
 	
 	UFUNCTION()
 	void MoveRight(float AxisValue);
+
+	// 점프 함수 
+	UFUNCTION()
+	void StartJump();
+	
+	UFUNCTION()
+	void StopJump();
 };
