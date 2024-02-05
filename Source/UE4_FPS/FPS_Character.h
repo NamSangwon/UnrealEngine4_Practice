@@ -26,4 +26,10 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	// 상하좌우 이동 함수
+	UFUNCTION()
+	void MoveForward(float AxisValue);
+	
+	UFUNCTION()
+	void MoveRight(float AxisValue);
 };

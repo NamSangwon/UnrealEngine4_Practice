@@ -34,5 +34,20 @@ void AFPS_Character::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
+	// 구현한 함수와 매핑한 입력 값 바인딩
+	InputComponent->BindAxis("MoveForward", this, &AFPS_Character::MoveForward);
+	InputComponent->BindAxis("MoveRight", this, &AFPS_Character::MoveRight);
 }
 
+// 캐릭터의 동작 축을 카메라에 상대적이게 설정 (전방 == 카메라가 향하는 방향)
+// 제어 방향 구하기 => 플레이어의 컨트롤러 사용
+// 제어 회전 함수의 피치 컴포너트를 무시하여 입력을 X, Y로 제한시켜 위나 아래를 바라보더라도 캐릭터는 땅과 평행하게 움직이도록 함
+void AFPS_Character::MoveForward(float AxisValue){
+	FVector Direction = FRotationMatrix(Controller->GetControlRotation()).GetScaledAxis(EAxis::X);
+	AddMovementInput(Direction, AxisValue);
+}
+
+void AFPS_Character::MoveRight(float AxisValue){
+	FVector Direction = FRotationMatrix(Controller->GetControlRotation()).GetScaledAxis(EAxis::Y);
+	AddMovementInput(Direction, AxisValue);
+}
