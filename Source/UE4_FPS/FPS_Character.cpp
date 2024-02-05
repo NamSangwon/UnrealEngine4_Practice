@@ -10,11 +10,21 @@ AFPS_Character::AFPS_Character()
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
+	// 3인칭 메시 문제 해결을 위한 카메라 위치 조정
 	FPSCameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("FirstPersonCamera"));
 	FPSCameraComponent->SetupAttachment(GetCapsuleComponent()); // 카메라 부착
 	FPSCameraComponent->SetRelativeLocation(FVector(0.0f, 0.0f, 50.0f + BaseEyeHeight)); // 카메라 위치 조정
 	FPSCameraComponent->bUsePawnControlRotation = true; // Pawn 카메라 로테이션 제어 허용
 
+	// 1인칭 메시 컴포넌트
+	FPSMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("FirstPersonMesh"));
+	FPSMesh->SetOnlyOwnerSee(true); // 해당 플레이어만 보이도록 함
+	FPSMesh->SetupAttachment(FPSCameraComponent); // 카메라에 붙여서 보이도록 함
+	FPSMesh->bCastDynamicShadow = false; // 그림자 보이지 않게 하기 1
+	FPSMesh->CastShadow = false; // 그림자 보이지 않게 하기 2
+
+	// 해당 플레이어는 3인칭 메시가 보이지 않도록 설정
+	GetMesh()->SetOwnerNoSee(true);
 }
 
 // Called when the game starts or when spawned

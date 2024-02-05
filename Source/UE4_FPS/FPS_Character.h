@@ -41,7 +41,11 @@ public:
 	UFUNCTION()
 	void StopJump();
 
-	// 카메라 클래스 변수
+	// 카메라 클래스 변수 (3인칭 메시 문제 해결)
 	UPROPERTY(VisibleAnywhere)
 	UCameraComponent* FPSCameraComponent;
+
+	// 1인칭 메시
+	UPROPERTY(VisibleDefaultsOnly, Category="Mesh")
+	USkeletalMeshComponent* FPSMesh;
 };
