@@ -37,6 +37,10 @@ void AFPS_Character::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 	// 구현한 함수와 매핑한 입력 값 바인딩
 	InputComponent->BindAxis("MoveForward", this, &AFPS_Character::MoveForward);
 	InputComponent->BindAxis("MoveRight", this, &AFPS_Character::MoveRight);
+
+	// 캐릭터 클래스에서 제공하는 카메라 회전 컨트롤에 대한 필수 함수 사용
+	InputComponent->BindAxis("Turn", this, &AFPS_Character::AddControllerYawInput);
+	InputComponent->BindAxis("LookUp", this, &AFPS_Character::AddControllerPitchInput);
 }
 
 // 캐릭터의 동작 축을 카메라에 상대적이게 설정 (전방 == 카메라가 향하는 방향)
