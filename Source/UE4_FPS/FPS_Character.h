@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "Camera/CameraComponent.h"
+#include "FPS_Projectile.h"
 #include "FPS_Character.generated.h"
 
 UCLASS()
@@ -41,6 +42,18 @@ public:
 	UFUNCTION()
 	void StopJump();
 
+	// 발사체 발사 기능 추가
+	UFUNCTION()
+	void Fire();
+
+	// 발사체 스폰 위치 변수
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="GamePlay")
+	FVector MuzzleOffset;
+
+	// Fire() 함수 실행 시 생성될 발사체 클래스 변수
+	UPROPERTY(EditDefaultsOnly, Category="Projectile")
+	TSubclassOf<AFPS_Projectile> ProjectileClass;
+
 	// 카메라 클래스 변수 (3인칭 메시 문제 해결)
 	UPROPERTY(VisibleAnywhere)
 	UCameraComponent* FPSCameraComponent;
@@ -48,4 +61,5 @@ public:
 	// 1인칭 메시
 	UPROPERTY(VisibleDefaultsOnly, Category="Mesh")
 	USkeletalMeshComponent* FPSMesh;
+
 };

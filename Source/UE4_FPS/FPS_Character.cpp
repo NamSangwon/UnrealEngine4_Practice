@@ -62,6 +62,9 @@ void AFPS_Character::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &AFPS_Character::StartJump);
 	PlayerInputComponent->BindAction("Jump", IE_Released, this, &AFPS_Character::StopJump);
 
+	// 발사체 발사 함수 매핑
+	PlayerInputComponent->BindAction("Fire", IE_Pressed, this, &AFPS_Character::Fire);
+
 }
 
 // 캐릭터의 동작 축을 카메라에 상대적이게 설정 (전방 == 카메라가 향하는 방향)
@@ -83,4 +86,35 @@ void AFPS_Character::StartJump(){
 
 void AFPS_Character::StopJump(){
 	bPressedJump = false;
+}
+
+void AFPS_Character::Fire(){
+	if (ProjectileClass){
+		// 캐릭터의 카메라 위치 및 방향 구하기
+		FVector CameraLocation;
+		FRotator CameraRotation;
+		GetActorEyesViewPoint(CameraLocation, CameraRotation); 
+
+		// 발사체 클래스 스폰될 위치 정하기
+		// MuzzleOffset 을 카메라 스페이스에서 월드 스페이스로 변환합니다.
+		FVector MuzzleLocation = CameraLocation + FTransform(CameraRotation).TransformVector(MuzzleOffset);
+		FRotator MuzzleRotation = CameraRotation;
+		MuzzleRotation.Pitch += 10.0f; // 조준을 약간 윗쪽으로 올리기
+
+		// 발사체 스폰 위치에서 부터 발사체 생성 후 발사
+		UWorld* World = GetWorld();
+		if (World){
+			FActorSpawnParameters SpawnParams;
+			SpawnParams.Owner = this;
+			SpawnParams.Instigator = GetInstigator();
+
+			// 발사체 생성
+			AFPS_Projectile* Projectile = World->SpawnActor<AFPS_Projectile>(ProjectileClass, MuzzleLocation, MuzzleRotation, SpawnParams);
+			if (Projectile) {
+				// LaunchDirection == MuzzleRotation.Vector()의 방향으로 발사체 발사
+				FVector LaunchDirection = MuzzleRotation.Vector();
+				Projectile->FireInDirection(LaunchDirection);
+			}
+		}
+	}
 }
