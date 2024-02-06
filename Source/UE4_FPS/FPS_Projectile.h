@@ -35,4 +35,8 @@ public:
 
 	// 발사체 담당 함수
 	void FireInDirection(const FVector& ShootDirection); // const == 함수에 전달되는 포인터의 내용 훼손 방지
+
+	// 충돌 처리 함수
+	UFUNCTION()
+	void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit);
 };
