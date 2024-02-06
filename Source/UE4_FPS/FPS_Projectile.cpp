@@ -13,6 +13,8 @@ AFPS_Projectile::AFPS_Projectile()
 	CollisionComponent = CreateDefaultSubobject<USphereComponent>(TEXT("SphereComponent"));
 	CollisionComponent->InitSphereRadius(15.0f);
 	RootComponent = CollisionComponent;
+	// 발사체 클래스의 소스파일에 충돌 프로파일 지정
+	CollisionComponent->BodyInstance.SetCollisionProfileName(TEXT("Projectile"));
 
 	// 발사체 움직임 처리 변수 초기화
 	ProjectileMovementComponent = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("ProjectileMovementComponent"));
@@ -23,6 +25,8 @@ AFPS_Projectile::AFPS_Projectile()
 	ProjectileMovementComponent->bShouldBounce = true;
 	ProjectileMovementComponent->Bounciness = 0.3f;
 
+	// 해당 액터 클래스 수명
+	InitialLifeSpan = 3.0f;
 }
 
 // Called when the game starts or when spawned
