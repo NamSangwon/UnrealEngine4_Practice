@@ -162,3 +162,6 @@
 
 ---
 
+## 애니메이션 적용
+
+- [해당 강의 영상 참고](https://www.youtube.com/watch?v=f38dblhh-FE&list=PLYQHfkihy4AxmwLN7Tn_958qChILAynw_&index=26)
