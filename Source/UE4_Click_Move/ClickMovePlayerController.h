@@ -24,5 +24,11 @@ protected:
 
 	void InputLeftMouseButtonReleased();
 
+	void SetNewDestination(const FVector Destination); // 마우스 좌클릭 시 이동
+
+	void MoveToMouseCursor();
+
 	virtual void SetupInputComponent() override;
+
+	virtual void PlayerTick(float DeltaTime) override;
 };
