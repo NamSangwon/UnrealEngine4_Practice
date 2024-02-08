@@ -8,7 +8,8 @@ public class UE4_Click_Move : ModuleRules
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 	
-		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore" });
+		PublicDependencyModuleNames.AddRange(
+			new string[] { "Core", "CoreUObject", "Engine", "InputCore", "NavigationSystem", "AIModule" }); // "NavigationSystem", "AIModule" 추가
 
 		PrivateDependencyModuleNames.AddRange(new string[] {  });
 
