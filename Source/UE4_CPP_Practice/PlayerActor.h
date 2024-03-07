@@ -19,8 +19,28 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	void initMesh();
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	// 몸통
+	UStaticMeshComponent* bodyMeshComp;
+
+	// 머리
+	UStaticMeshComponent* headMeshComp;
+
+	// Catch Arm
+	UStaticMeshComponent* catch_Arm_L_Mesh_Comp;
+	UStaticMeshComponent* catch_Arm_R_Mesh_Comp;
+
+	// Miss Arm
+	UStaticMeshComponent* miss_Arm_L_Mesh_Comp;
+	UStaticMeshComponent* miss_Arm_R_Mesh_Comp;
+
+	// Hooray Arm
+	UStaticMeshComponent* hooray_Arm_L_Mesh_Comp;
+	UStaticMeshComponent* hooray_Arm_R_Mesh_Comp;
+	
 };
