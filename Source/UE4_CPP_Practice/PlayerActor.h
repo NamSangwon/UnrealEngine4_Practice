@@ -43,4 +43,9 @@ public:
 	UStaticMeshComponent* hooray_Arm_L_Mesh_Comp;
 	UStaticMeshComponent* hooray_Arm_R_Mesh_Comp;
 	
+	// Material 
+	UMaterial* bodyMaterial;
+	UMaterial* missArmMaterial;
+	UMaterial* hoorayArmMaterial;
+
 };

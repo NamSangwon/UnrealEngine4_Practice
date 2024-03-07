@@ -17,6 +17,14 @@ void APlayerActor::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	bodyMeshComp->SetMaterial(0, bodyMaterial);
+	headMeshComp->SetMaterial(0, bodyMaterial);
+	catch_Arm_L_Mesh_Comp->SetMaterial(0, bodyMaterial);
+	catch_Arm_R_Mesh_Comp->SetMaterial(0, bodyMaterial);
+	miss_Arm_L_Mesh_Comp->SetMaterial(0, missArmMaterial);
+	miss_Arm_R_Mesh_Comp->SetMaterial(0, missArmMaterial);
+	hooray_Arm_L_Mesh_Comp->SetMaterial(0, hoorayArmMaterial);
+	hooray_Arm_R_Mesh_Comp->SetMaterial(0, hoorayArmMaterial);
 }
 
 // Called every frame
@@ -27,6 +35,22 @@ void APlayerActor::Tick(float DeltaTime)
 }
 
 void APlayerActor::initMesh(){
+	// Accept Material
+	static ConstructorHelpers::FObjectFinder<UMaterial> M_Player(TEXT("/Game/M_Player.M_Player"));
+	if (M_Player.Object != NULL){
+		bodyMaterial = (UMaterial*)M_Player.Object;
+	}
+
+	static ConstructorHelpers::FObjectFinder<UMaterial> M_Miss(TEXT("/Game/M_Miss.M_Miss"));
+	if (M_Miss.Object != NULL){
+		missArmMaterial = (UMaterial*)M_Miss.Object;
+	}
+
+	static ConstructorHelpers::FObjectFinder<UMaterial> M_Hooray(TEXT("/Game/M_Hooray.M_Hooray"));
+	if (M_Hooray.Object != NULL){
+		hoorayArmMaterial = (UMaterial*)M_Hooray.Object;
+	}
+
 	// 몸통
 	bodyMeshComp = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Body Mesh Component"));
 	UStaticMesh* bodyMesh = ConstructorHelpers::FObjectFinder<UStaticMesh>(TEXT("/Engine/BasicShapes/Cube.Cube")).Object;
@@ -94,4 +118,6 @@ void APlayerActor::initMesh(){
 
 	hooray_Arm_L_Mesh_Comp->SetupAttachment(bodyMeshComp);
 	hooray_Arm_R_Mesh_Comp->SetupAttachment(bodyMeshComp);
+
+
 }
