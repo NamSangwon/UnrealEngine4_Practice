@@ -17,6 +17,7 @@ void APlayerActor::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	// Accept Material 
 	bodyMeshComp->SetMaterial(0, bodyMaterial);
 	headMeshComp->SetMaterial(0, bodyMaterial);
 	catch_Arm_L_Mesh_Comp->SetMaterial(0, bodyMaterial);
@@ -25,6 +26,9 @@ void APlayerActor::BeginPlay()
 	miss_Arm_R_Mesh_Comp->SetMaterial(0, missArmMaterial);
 	hooray_Arm_L_Mesh_Comp->SetMaterial(0, hoorayArmMaterial);
 	hooray_Arm_R_Mesh_Comp->SetMaterial(0, hoorayArmMaterial);
+
+	// Posing
+	this->setPose(0);
 }
 
 // Called every frame
@@ -35,7 +39,7 @@ void APlayerActor::Tick(float DeltaTime)
 }
 
 void APlayerActor::initMesh(){
-	// Accept Material
+	// Get Material
 	static ConstructorHelpers::FObjectFinder<UMaterial> M_Player(TEXT("/Game/M_Player.M_Player"));
 	if (M_Player.Object != NULL){
 		bodyMaterial = (UMaterial*)M_Player.Object;
@@ -120,4 +124,42 @@ void APlayerActor::initMesh(){
 	hooray_Arm_R_Mesh_Comp->SetupAttachment(bodyMeshComp);
 
 
+}
+
+void APlayerActor::setPose(int pose_num){
+	this->removeAllPose();
+
+	switch(pose_num){
+		case 0: // catch
+			catch_Arm_L_Mesh_Comp->SetHiddenInGame(false);
+			catch_Arm_R_Mesh_Comp->SetHiddenInGame(false);
+			break;
+
+		case 1: // miss
+			miss_Arm_L_Mesh_Comp->SetHiddenInGame(false);
+			miss_Arm_R_Mesh_Comp->SetHiddenInGame(false);
+			break;
+
+		case 2: // hooray
+			hooray_Arm_L_Mesh_Comp->SetHiddenInGame(false);
+			hooray_Arm_R_Mesh_Comp->SetHiddenInGame(false);
+			break;
+	}
+
+	// Execute OnPoseTimer(Timer Handler) After 1 second
+	GetWorldTimerManager().SetTimer(PoseHandler, this, &APlayerActor::OnPoseTimer, 1.0f, false);
+
+}
+
+void APlayerActor::removeAllPose(){
+	catch_Arm_L_Mesh_Comp->SetHiddenInGame(true);
+	catch_Arm_R_Mesh_Comp->SetHiddenInGame(true);
+	miss_Arm_L_Mesh_Comp->SetHiddenInGame(true);
+	miss_Arm_R_Mesh_Comp->SetHiddenInGame(true);
+	hooray_Arm_L_Mesh_Comp->SetHiddenInGame(true);
+	hooray_Arm_R_Mesh_Comp->SetHiddenInGame(true);
+}
+
+void APlayerActor::OnPoseTimer(){
+	this->removeAllPose();
 }

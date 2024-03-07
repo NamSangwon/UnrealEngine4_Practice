@@ -21,6 +21,14 @@ protected:
 
 	void initMesh();
 
+	void setPose(int pose_num);
+
+	void removeAllPose();
+
+	void OnPoseTimer();
+
+	FTimerHandle PoseHandler;
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
