@@ -163,3 +163,8 @@ void APlayerActor::removeAllPose(){
 void APlayerActor::OnPoseTimer(){
 	this->removeAllPose();
 }
+
+void APlayerActor::informMouseCnt(int mouse_cnt_in_game){
+	this->mouse_cnt = mouse_cnt_in_game;
+	this->mouse_remain = this->mouse_cnt;
+}

@@ -20,14 +20,14 @@ protected:
 	virtual void BeginPlay() override;
 
 	void initMesh();
-
 	void setPose(int pose_num);
-
 	void removeAllPose();
-
 	void OnPoseTimer();
 
 	FTimerHandle PoseHandler;
+
+	int mouse_cnt;
+	int mouse_remain;
 
 public:	
 	// Called every frame
@@ -56,4 +56,6 @@ public:
 	UMaterial* missArmMaterial;
 	UMaterial* hoorayArmMaterial;
 
+	// For get total mouse count In Game
+	void informMouseCnt(int mouse_cnt);
 };
