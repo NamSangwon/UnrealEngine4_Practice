@@ -180,4 +180,7 @@ void APlayerActor::OnDecisionTimer(){
 	this->decision_action = FMath::RandRange(0, 1); // 0 == catch || 1 == miss
 
 	this->setPose(decision_action);
+
+	// 이벤트 발생
+	decideEvent.Broadcast(decision_action);
 }

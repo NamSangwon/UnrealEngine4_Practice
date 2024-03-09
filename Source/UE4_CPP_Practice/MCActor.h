@@ -21,13 +21,19 @@ protected:
 	virtual void BeginPlay() override;
 
 	void initMesh();
+
 	void initGame();
 	void moveNextPlayer();
+
+	void OnInitTimer();
+	void OnPlayerDecidedEvent(int32 decision_action);
 
 	int mouse_cnt;
 	int mouse_remain;
 
 	int player_idx;
+
+	FTimerHandle InitTimer;
 
 public:	
 	// Called every frame
@@ -45,4 +51,16 @@ public:
 	// Players
 	UPROPERTY(EditAnywhere)
 	APlayerActor* player0;
+	
+	UPROPERTY(EditAnywhere)
+	APlayerActor* player1;
+	
+	UPROPERTY(EditAnywhere)
+	APlayerActor* player2;
+	
+	UPROPERTY(EditAnywhere)
+	APlayerActor* player3;
+	
+	UPROPERTY(EditAnywhere)
+	APlayerActor* player4;
 };

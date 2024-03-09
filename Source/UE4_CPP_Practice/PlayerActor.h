@@ -67,4 +67,14 @@ public:
 
 	void informMouseCnt(int mouse_cnt); // For get total mouse count In Game
 	void informPlayerIdx(int player_idx); 
+
+// UE Event
+public:
+	FOnDecideEvent& OnDecided(){
+		return decideEvent;
+	}
+
+private:
+	FOnDecideEvent decideEvent;
+	
 };

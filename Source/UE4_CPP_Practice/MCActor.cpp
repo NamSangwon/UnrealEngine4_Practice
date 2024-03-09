@@ -21,6 +21,9 @@ void AMCActor::BeginPlay()
 	bodyMeshComp->SetMaterial(0, MC_Material);
 	headMeshComp->SetMaterial(0, MC_Material);
 
+	// APlayerActor에서 선언한 이벤트를 처리할 핸들러 바인딩
+	player0->OnDecided().AddUObject(this, &AMCActor::OnPlayerDecidedEvent);
+
 	this->initGame();
 	this->moveNextPlayer();
 }
@@ -67,4 +70,26 @@ void AMCActor::moveNextPlayer(){
 	this->player_idx = (this->player_idx + 1) % 5; // 0 ~ 4의 인덱스로 총 5명의 플레이어 지정
 
 	player0->informPlayerIdx(player_idx);
+}
+
+// 이벤트 처리 핸들러
+void AMCActor::OnPlayerDecidedEvent(int32 decision_action){
+	if (decision_action == 0){ // catch
+		this->mouse_remain--;
+
+		if (this->mouse_remain == 0){ // hooray
+			GetWorldTimerManager().SetTimer(InitTimer, this, &AMCActor::OnInitTimer, 2.0f, false);
+		}
+		else{
+			this->moveNextPlayer();
+		}
+	}
+	else{ // miss
+		this->moveNextPlayer();
+	}
+}
+
+void AMCActor::OnInitTimer(){
+	this->initGame();
+	this->moveNextPlayer();
 }
