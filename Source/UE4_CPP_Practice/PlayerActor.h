@@ -24,11 +24,13 @@ protected:
 	void initMesh();
 	void setPose(int pose_num);
 	void removeAllPose();
-	void OnPoseTimer();
-	void OnDecisionTimer();
+	void OnPoseHandler();
+	void OnDecisionHandler();
+	void OnHoorayHandler();
 
-	FTimerHandle PoseHandler;
-	FTimerHandle DecisionHandler;
+	FTimerHandle PoseTimer;
+	FTimerHandle DecisionTimer;
+	FTimerHandle HoorayTimer;
 
 	int mouse_cnt;
 	int mouse_remain;
@@ -67,6 +69,7 @@ public:
 
 	void informMouseCnt(int mouse_cnt); // For get total mouse count In Game
 	void informPlayerIdx(int player_idx); 
+	void informDecision(int others_decision_action);
 
 // UE Event
 public:
@@ -76,5 +79,5 @@ public:
 
 private:
 	FOnDecideEvent decideEvent;
-	
+
 };

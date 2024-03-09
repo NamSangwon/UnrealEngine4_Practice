@@ -23,6 +23,10 @@ void AMCActor::BeginPlay()
 
 	// APlayerActor에서 선언한 이벤트를 처리할 핸들러 바인딩
 	player0->OnDecided().AddUObject(this, &AMCActor::OnPlayerDecidedEvent);
+	player1->OnDecided().AddUObject(this, &AMCActor::OnPlayerDecidedEvent);
+	player2->OnDecided().AddUObject(this, &AMCActor::OnPlayerDecidedEvent);
+	player3->OnDecided().AddUObject(this, &AMCActor::OnPlayerDecidedEvent);
+	player4->OnDecided().AddUObject(this, &AMCActor::OnPlayerDecidedEvent);
 
 	this->initGame();
 	this->moveNextPlayer();
@@ -64,16 +68,30 @@ void AMCActor::initGame(){
 	mouse_remain = mouse_cnt;
 
 	player0->informMouseCnt(mouse_cnt);
+	player1->informMouseCnt(mouse_cnt);
+	player2->informMouseCnt(mouse_cnt);
+	player3->informMouseCnt(mouse_cnt);
+	player4->informMouseCnt(mouse_cnt);
 }
 
 void AMCActor::moveNextPlayer(){
 	this->player_idx = (this->player_idx + 1) % 5; // 0 ~ 4의 인덱스로 총 5명의 플레이어 지정
 
 	player0->informPlayerIdx(player_idx);
+	player1->informPlayerIdx(player_idx);
+	player2->informPlayerIdx(player_idx);
+	player3->informPlayerIdx(player_idx);
+	player4->informPlayerIdx(player_idx);
 }
 
 // 이벤트 처리 핸들러
 void AMCActor::OnPlayerDecidedEvent(int32 decision_action){
+	player0->informDecision(decision_action);
+	player1->informDecision(decision_action);
+	player2->informDecision(decision_action);
+	player3->informDecision(decision_action);
+	player4->informDecision(decision_action);
+
 	if (decision_action == 0){ // catch
 		this->mouse_remain--;
 

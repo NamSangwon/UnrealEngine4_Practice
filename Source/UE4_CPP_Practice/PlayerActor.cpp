@@ -146,8 +146,8 @@ void APlayerActor::setPose(int pose_num){
 			break;
 	}
 
-	// Execute OnPoseTimer(Timer Handler) After 1 second
-	GetWorldTimerManager().SetTimer(PoseHandler, this, &APlayerActor::OnPoseTimer, 0.5f, false);
+	// Execute OnPoseHandler(Timer Handler) After 1 second
+	GetWorldTimerManager().SetTimer(PoseTimer, this, &APlayerActor::OnPoseHandler, 0.5f, false);
 
 }
 
@@ -160,10 +160,6 @@ void APlayerActor::removeAllPose(){
 	hooray_Arm_R_Mesh_Comp->SetHiddenInGame(true);
 }
 
-void APlayerActor::OnPoseTimer(){
-	this->removeAllPose();
-}
-
 void APlayerActor::informMouseCnt(int mouse_cnt_in_game){
 	this->mouse_cnt = mouse_cnt_in_game;
 	this->mouse_remain = this->mouse_cnt;
@@ -172,11 +168,29 @@ void APlayerActor::informMouseCnt(int mouse_cnt_in_game){
 void APlayerActor::informPlayerIdx(int player_idx){
 	if (player_idx == playerOwnIndex){ // 자신이 할 차례인지 확인
 		// 1초 후에 취할 행동 결정
-		GetWorldTimerManager().SetTimer(DecisionHandler, this, &APlayerActor::OnDecisionTimer, 1.0f, false);
+		GetWorldTimerManager().SetTimer(DecisionTimer, this, &APlayerActor::OnDecisionHandler, 1.0f, false);
 	}
 }
 
-void APlayerActor::OnDecisionTimer(){
+void APlayerActor::informDecision(int others_decision_action){
+	if (others_decision_action == 0){
+		this->mouse_remain--;
+
+		if (this->mouse_remain == 0){
+			GetWorldTimerManager().SetTimer(HoorayTimer, this, &APlayerActor::OnHoorayHandler, 1.0f, false);
+		}
+	}
+}
+
+void APlayerActor::OnPoseHandler(){
+	this->removeAllPose();
+}
+
+void APlayerActor::OnHoorayHandler(){
+	this->setPose(2);
+}
+
+void APlayerActor::OnDecisionHandler(){
 	this->decision_action = FMath::RandRange(0, 1); // 0 == catch || 1 == miss
 
 	this->setPose(decision_action);
