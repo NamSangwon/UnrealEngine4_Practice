@@ -28,7 +28,7 @@ void APlayerActor::BeginPlay()
 	hooray_Arm_R_Mesh_Comp->SetMaterial(0, hoorayArmMaterial);
 
 	// Posing
-	this->setPose(0);
+	this->removeAllPose();
 }
 
 // Called every frame
@@ -147,7 +147,7 @@ void APlayerActor::setPose(int pose_num){
 	}
 
 	// Execute OnPoseTimer(Timer Handler) After 1 second
-	GetWorldTimerManager().SetTimer(PoseHandler, this, &APlayerActor::OnPoseTimer, 1.0f, false);
+	GetWorldTimerManager().SetTimer(PoseHandler, this, &APlayerActor::OnPoseTimer, 0.5f, false);
 
 }
 
@@ -167,4 +167,17 @@ void APlayerActor::OnPoseTimer(){
 void APlayerActor::informMouseCnt(int mouse_cnt_in_game){
 	this->mouse_cnt = mouse_cnt_in_game;
 	this->mouse_remain = this->mouse_cnt;
+}
+
+void APlayerActor::informPlayerIdx(int player_idx){
+	if (player_idx == playerOwnIndex){ // 자신이 할 차례인지 확인
+		// 1초 후에 취할 행동 결정
+		GetWorldTimerManager().SetTimer(DecisionHandler, this, &APlayerActor::OnDecisionTimer, 1.0f, false);
+	}
+}
+
+void APlayerActor::OnDecisionTimer(){
+	this->decision_action = FMath::RandRange(0, 1); // 0 == catch || 1 == miss
+
+	this->setPose(decision_action);
 }

@@ -6,6 +6,8 @@
 #include "GameFramework/Actor.h"
 #include "PlayerActor.generated.h"
 
+DECLARE_EVENT_OneParam(APlayerActor, FOnDecideEvent, int32)
+
 UCLASS()
 class UE4_CPP_PRACTICE_API APlayerActor : public AActor
 {
@@ -23,11 +25,14 @@ protected:
 	void setPose(int pose_num);
 	void removeAllPose();
 	void OnPoseTimer();
+	void OnDecisionTimer();
 
 	FTimerHandle PoseHandler;
+	FTimerHandle DecisionHandler;
 
 	int mouse_cnt;
 	int mouse_remain;
+	int decision_action;
 
 public:	
 	// Called every frame
@@ -56,6 +61,10 @@ public:
 	UMaterial* missArmMaterial;
 	UMaterial* hoorayArmMaterial;
 
-	// For get total mouse count In Game
-	void informMouseCnt(int mouse_cnt);
+	// Player Own Index
+	UPROPERTY(EditAnywhere)
+	int playerOwnIndex;
+
+	void informMouseCnt(int mouse_cnt); // For get total mouse count In Game
+	void informPlayerIdx(int player_idx); 
 };

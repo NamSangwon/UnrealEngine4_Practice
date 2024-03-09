@@ -22,9 +22,12 @@ protected:
 
 	void initMesh();
 	void initGame();
+	void moveNextPlayer();
 
 	int mouse_cnt;
 	int mouse_remain;
+
+	int player_idx;
 
 public:	
 	// Called every frame

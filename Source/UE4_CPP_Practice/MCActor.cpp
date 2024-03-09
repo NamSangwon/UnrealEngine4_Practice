@@ -5,6 +5,7 @@
 
 // Sets default values
 AMCActor::AMCActor()
+		: player_idx(-1)
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
@@ -19,6 +20,9 @@ void AMCActor::BeginPlay()
 	
 	bodyMeshComp->SetMaterial(0, MC_Material);
 	headMeshComp->SetMaterial(0, MC_Material);
+
+	this->initGame();
+	this->moveNextPlayer();
 }
 
 // Called every frame
@@ -57,4 +61,10 @@ void AMCActor::initGame(){
 	mouse_remain = mouse_cnt;
 
 	player0->informMouseCnt(mouse_cnt);
+}
+
+void AMCActor::moveNextPlayer(){
+	this->player_idx = (this->player_idx + 1) % 5; // 0 ~ 4의 인덱스로 총 5명의 플레이어 지정
+
+	player0->informPlayerIdx(player_idx);
 }
